@@ -86,3 +86,13 @@ export const getOpReturnFromTx = (rawHex: string) => {
   }
   return message;
 };
+
+export const getFeeRate = (rawHex: string, fee: number) => {
+  const decodedTx = Transaction.fromHex(rawHex);
+  // Calculate the transaction size in bytes
+  const transactionSizeBytes = decodedTx.byteLength();
+
+  // Calculate the fee rate per vbyte (in satoshis/vbyte)
+  const feeRateSatoshisPerVbyte = fee / transactionSizeBytes;
+  return feeRateSatoshisPerVbyte;
+};

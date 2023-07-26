@@ -7,6 +7,7 @@ import {
   payments,
 } from "bitcoinjs-lib";
 import {
+  getFeeRate,
   getFile,
   getHash,
   getNetwork,
@@ -146,10 +147,12 @@ export const handleTx = async ({
 
   const rawTx = psbt.extractTransaction().toHex();
   const verifyMessage = getOpReturnFromTx(rawTx);
+  const feeRate = getFeeRate(rawTx, data.fee);
   const confirmDetails = await confirm({
     message: `Verify transaction details:
     
 - Sending ${outputValue} satoshis back to change address ${data.changeAddress}
+- Fee rate: ${feeRate.toFixed(2)} sats/vbyte (total fees: ${data.fee})
 - OP_RETURN message ${verifyMessage}
 - preimage of "${message}". 
 
