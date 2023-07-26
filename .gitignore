@@ -1,0 +1,9 @@
+node_modules/
+*.txt
+# ignore json files since private tx data is stored in these
+*.json
+# Except package.json and package-lock.json
+!package.json
+!package-lock.json
+dist/**
+.vscode
