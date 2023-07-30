@@ -46,7 +46,7 @@ are required in either the file or via command line arguments.`,
     "-f, --file [fileName]",
     "If true, you will be prompted for a path to a file name",
   )
-  .requiredOption(
+  .option(
     "-m, --message <message>",
     "The message to encode in the transaction outputs.",
   )
@@ -100,7 +100,7 @@ program
   .command("prove")
   .description("Prove the existence of a message in a transaction")
   .option("-t, --txid <txid>", "Txid to check")
-  .requiredOption(
+  .option(
     "-p, --preimage <preimage>",
     "Hash preimage to check for the existence of in the transaction",
   )
@@ -108,10 +108,10 @@ program
     "-h, --hex  <hex>",
     "Raw hex of transaction to confirm. If provided No network call will be made.",
   )
-  .addOption(
-    new Option("-n, --network <network>")
-      .choices(networks)
-      .makeOptionMandatory(),
+  .addOption(new Option("-n, --network <network>").choices(networks))
+  .option(
+    "-f, --file [fileName]",
+    "Path to file with arguments instead of via cli arguments",
   )
   .action(prove);
 

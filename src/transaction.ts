@@ -30,6 +30,7 @@ interface TxData {
   fee: number;
   utxoScript?: string;
   utxoValue?: number;
+  message: string;
 }
 
 export const handleTx = async ({
@@ -55,7 +56,7 @@ export const handleTx = async ({
   output: boolean;
   save: boolean;
 }) => {
-  let data: TxData = { utxo, network, wif, changeAddress, fee };
+  let data: TxData = { utxo, network, wif, changeAddress, fee, message };
   if (file) {
     const filePath = await getFile(file);
     const fileData: TxData = JSON.parse(readFileSync(filePath, "utf8"));
@@ -105,14 +106,14 @@ export const handleTx = async ({
   let embed: Payment;
 
   if (!hash) {
-    const raw = Buffer.from(message, "utf8");
+    const raw = Buffer.from(data.message, "utf8");
     console.log(`message length is ${Buffer.byteLength(raw)}`);
     console.log("raw: ", raw);
     if (Buffer.byteLength(raw) > 40)
       return console.error("Message is too long. Must be <= 40 bytes");
     embed = payments.embed({ data: [raw] });
   } else {
-    const secret = getHash(message);
+    const secret = getHash(data.message);
     embed = payments.embed({ data: [secret] });
   }
 
@@ -154,7 +155,7 @@ export const handleTx = async ({
 - Sending ${outputValue} satoshis back to change address ${data.changeAddress}
 - Fee rate: ${feeRate.toFixed(2)} sats/vbyte (total fees: ${data.fee})
 - OP_RETURN message ${verifyMessage}
-- preimage of "${message}". 
+- preimage of "${data.message}". 
 
 Confirm?`,
   });
@@ -170,10 +171,10 @@ Confirm?`,
 
   if (output) {
     console.log(rawTx);
-    console.log(`Preimage: ${message}`);
+    console.log(`Preimage: ${data.message}`);
   }
 
   if (save) {
-    saveToFile("transaction", { tx: rawTx, preimage: message });
+    saveToFile("transaction", { tx: rawTx, preimage: data.message });
   }
 };
