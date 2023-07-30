@@ -87,7 +87,7 @@ in the future.
 $ npm run cli prove -- -n testnet --txid="[txid]" --preimage "foobarbaz"
 ```
 
-And your done!
+And you're done!
 
 NOTES:
 
@@ -99,6 +99,6 @@ NOTES:
 ## FAQ
 
 - Q: What's an `OP_RETURN` transaction?
-  - A: `OP_RETURN`'s are a way to embed data directly on the blockchain in a transaction output without adding additional bloat in the form of unspendable UTXOs.
+  - A: `OP_RETURN`s are a way to embed data directly on the blockchain in a transaction output without adding unnecessary bloat in the form of unspendable UTXOs.
 - Why do I need this tool when others exist?
-  - Fair question. You could use opentimestamps or the OP_RETURN bot, both perfectly fine tools. For some situations though, you might want to control and prove the providence of a particular piece of data embedded in the blockchain, i.e. by using UTXOs you control to pay for the transaction
+  - Fair question. You could use opentimestamps or the OP_RETURN bot, both perfectly fine tools. For some situations though, you might want to control and prove the providence of a particular piece of data embedded in the blockchain, i.e. by using UTXOs you control to pay for the transaction. Another reason might be to have the transaction ready to go ahead of time ready for you to broadcast at a time and place of your choosing.
